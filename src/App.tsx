@@ -1,8 +1,21 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  }
+}
+
 function App() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -16,7 +29,20 @@ function App() {
 
   console.log("Products:", products);
   return (
-    <main></main>
+    <main id='main'>
+      {
+        products.map((product) => (
+          <div className='product' key={product.id}>
+            <div className='product-image'>
+              <img src={product.image} alt={product.title} />
+            </div>
+            <h2 className='product-title'>{product.title}</h2>
+            <p className='product-price'>${product.price}</p>
+            <p>{product.description}</p>
+          </div>
+        ))
+      }
+    </main>
   )
 }
 
